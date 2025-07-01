@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medicare ID Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style id="theme-style">
+        :root { --primary-color: #4f46e5; }
+        body { font-family: 'Inter', sans-serif; }
+        .bg-primary { background-color: var(--primary-color); }
+        .text-primary { color: var(--primary-color); }
+        .dark .dark\:bg-gray-800 { background-color: #1f2937; }
+        .dark .dark\:bg-gray-900 { background-color: #111827; }
+        .dark .dark\:text-gray-200 { color: #e5e7eb; }
+        .dark .dark\:text-gray-400 { color: #9ca3af; }
+        .dark .dark\:border-gray-700 { border-color: #374151; }
+        .font-medicare { font-family: 'Helvetica', 'Arial', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+
+    <div class="max-w-md mx-auto bg-white dark:bg-gray-800 min-h-screen shadow-2xl">
+        <!-- Header -->
+        <header class="bg-white dark:bg-gray-800 p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between sticky top-0 z-10">
+            <img src="CMS logo.png" alt="CMS Logo" class="h-8" onerror="this.style.display='none'">
+            <div class="flex items-center gap-4">
+                <a href="modern_messages.html" class="text-gray-500 hover:text-primary dark:text-gray-400"><i class="fas fa-inbox fa-lg"></i></a>
+                <a href="modern_settings.html" class="text-gray-500 hover:text-primary dark:text-gray-400"><i class="fas fa-cog fa-lg"></i></a>
+                <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-md font-semibold" id="profileAvatar"></div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="p-4 pb-24">
+             <div class="flex items-center gap-4 mb-6">
+                <a href="modern_home.html" class="text-gray-500 hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a>
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Your ID Card</h1>
+            </div>
+
+            <!-- Medicare Card -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden relative font-medicare max-w-sm mx-auto border-2 border-gray-200">
+                <!-- Card Header -->
+                <div class="bg-[#003a78] text-white p-3 flex items-center justify-between">
+                    <img src="https://www.cms.gov/themes/custom/cms_gov/images/logo_white.png" alt="HHS Logo" class="h-8">
+                    <h2 class="text-xl font-bold tracking-wider">MEDICARE HEALTH INSURANCE</h2>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-4 relative">
+                     <!-- Watermark -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <p class="text-8xl font-bold text-gray-200 opacity-50 transform -rotate-12 select-none">SAMPLE</p>
+                    </div>
+
+                    <div class="relative z-10">
+                        <!-- Name -->
+                        <div class="mb-4">
+                            <p class="text-xs text-gray-600">Name/Nombre</p>
+                            <p id="cardName" class="font-bold text-lg tracking-wider"></p>
+                        </div>
+
+                        <!-- Medicare Number -->
+                        <div class="mb-4">
+                            <p class="text-xs text-gray-600">Medicare Number/Número de Medicare</p>
+                            <p class="font-mono text-lg tracking-widest">1EG4-TE5-MK72</p>
+                        </div>
+
+                        <!-- Entitled To -->
+                        <div class="flex justify-between">
+                            <div>
+                                <p class="text-xs text-gray-600">Entitled to/Con derecho a</p>
+                                <p class="font-bold">HOSPITAL (PART A)</p>
+                                <p class="font-bold">MEDICAL (PART B)</p>
+                            </div>
+                            <div>
+                                <p class="text-xs text-gray-600">Coverage starts/Cobertura empieza</p>
+                                <p class="font-bold">03-01-2016</p>
+                                <p class="font-bold">03-01-2016</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card Footer -->
+                <div class="bg-[#c00000] h-4"></div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        function applySettings() {
+            const settings = JSON.parse(localStorage.getItem('appSettings'));
+            let currentParticipantName = "JOHN L SMITH"; // Default for card
+            if (settings) {
+                if (settings.darkMode) document.documentElement.classList.add('dark');
+                document.body.style.fontFamily = settings.fontFamily || "'Inter', sans-serif";
+                document.documentElement.style.setProperty('--primary-color', settings.primaryColor || '#4f46e5');
+                if (settings.participantName) currentParticipantName = settings.participantName.toUpperCase();
+            }
+            const initials = currentParticipantName.split(' ').map(n => n[0]).join('');
+            document.getElementById('profileAvatar').textContent = initials;
+            document.getElementById('cardName').textContent = currentParticipantName;
+            document.querySelector('.bg-primary').style.backgroundColor = getComputedStyle(document.documentElement).getPropertyValue('--primary-color');
+        }
+        applySettings();
+    </script>
+</body>
+</html>
