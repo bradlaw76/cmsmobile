@@ -24,8 +24,9 @@
             color: var(--primary-color);
             background-color: color-mix(in srgb, var(--primary-color) 15%, transparent);
         }
-        .dark .dark\:bg-gray-800 { background-color: #1f2937; }
+        /* Dark mode styles */
         .dark .dark\:bg-gray-900 { background-color: #111827; }
+        .dark .dark\:bg-gray-800-main { background-color: #1f2937; }
         .dark .dark\:text-gray-200 { color: #e5e7eb; }
         .dark .dark\:text-gray-300 { color: #d1d5db; }
         .dark .dark\:text-gray-400 { color: #9ca3af; }
@@ -43,54 +44,54 @@
     </script>
 </head>
 <body class="bg-gray-100 dark:bg-gray-900">
-    <div class="max-w-md mx-auto bg-white dark:bg-gray-800 min-h-screen shadow-2xl">
+    <div class="max-w-md mx-auto bg-white dark:bg-gray-800-main min-h-screen shadow-2xl">
         <!-- Header -->
-        <header class="bg-white dark:bg-gray-800 p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between sticky top-0 z-10">
-            <img src="CMS logo.png" alt="CMS Logo" class="h-8" onerror="this.style.display='none'">
+        <header class="bg-white p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between sticky top-0 z-10">
             <div class="flex items-center gap-4">
-                <a href="modern_messages.html" class="text-gray-500 hover:text-primary dark:text-gray-400"><i class="fas fa-inbox fa-lg"></i></a>
-                <a href="modern_settings.html" class="text-gray-500 hover:text-primary dark:text-gray-400"><i class="fas fa-cog fa-lg"></i></a>
-                <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-md font-semibold" id="profileAvatar"></div>
+                <img src="CMS logo.png" alt="CMS Logo" class="h-8" onerror="this.style.display='none'">
+                <a href="modern_messages.html" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-inbox fa-lg"></i></a>
+                <a href="modern_settings.html" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-cog fa-lg"></i></a>
             </div>
+            <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-md font-semibold" id="profileAvatar"></div>
         </header>
 
         <!-- Main Content -->
         <main class="p-4 pb-24 space-y-6">
             <div class="flex items-center gap-4">
-                <a href="modern_home.html" class="text-gray-500 hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a>
-                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Payments</h1>
+                <a href="modern_home.html" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a>
+                <h1 class="text-2xl font-bold text-black dark:text-gray-200">Payments</h1>
             </div>
             <div class="bg-primary-gradient text-white rounded-2xl p-6 text-center shadow-lg">
                 <p class="text-sm opacity-80">Total Monthly Premium</p>
                 <p class="text-4xl font-bold my-2" id="totalPremium"></p>
                 <p class="text-sm opacity-80">Next payment on <span id="nextPaymentDate"></span></p>
             </div>
-            <div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700">
-                <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Premium Breakdown</h2>
+            <div class="bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-black dark:text-gray-200 mb-4">Premium Breakdown</h2>
                 <div class="space-y-3">
-                    <div class="flex justify-between items-center"><p class="text-gray-600 dark:text-gray-400">Medicare Part A</p><p class="font-semibold text-gray-800 dark:text-gray-200" id="partA"></p></div><hr class="dark:border-gray-700">
-                    <div class="flex justify-between items-center"><p class="text-gray-600 dark:text-gray-400">Medicare Part B</p><p class="font-semibold text-gray-800 dark:text-gray-200" id="partB"></p></div><hr class="dark:border-gray-700">
-                    <div class="flex justify-between items-center"><p class="text-gray-600 dark:text-gray-400">Medicare Part D</p><p class="font-semibold text-gray-800 dark:text-gray-200" id="partD"></p></div>
+                    <div class="flex justify-between items-center"><p class="text-black dark:text-gray-400">Medicare Part A</p><p class="font-semibold text-black dark:text-gray-200" id="partA"></p></div><hr class="dark:border-gray-700">
+                    <div class="flex justify-between items-center"><p class="text-black dark:text-gray-400">Medicare Part B</p><p class="font-semibold text-black dark:text-gray-200" id="partB"></p></div><hr class="dark:border-gray-700">
+                    <div class="flex justify-between items-center"><p class="text-black dark:text-gray-400">Medicare Part D</p><p class="font-semibold text-black dark:text-gray-200" id="partD"></p></div>
                 </div>
             </div>
-            <div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700">
-                <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Payment Method</h2>
+            <div class="bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-black dark:text-gray-200 mb-4">Payment Method</h2>
                 <div class="flex items-center gap-4 mb-4">
                     <div class="w-12 h-12 bg-indigo-100 dark:bg-gray-700 rounded-lg flex items-center justify-center"><i class="fas fa-university text-2xl text-primary"></i></div>
-                    <div><p class="font-semibold text-gray-700 dark:text-gray-300">Auto Deduction</p><p id="paymentMethod" class="text-sm text-gray-500 dark:text-gray-400"></p></div>
+                    <div><p class="font-semibold text-black dark:text-gray-300">Auto Deduction</p><p id="paymentMethod" class="text-sm text-black dark:text-gray-400"></p></div>
                 </div>
                 <button class="w-full bg-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-primary-dark transition">Update Payment Method</button>
             </div>
         </main>
 
         <!-- Bottom Navigation -->
-        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 flex justify-around p-2">
-            <a href="modern_home.html" class="nav-item flex-1 text-center text-gray-600 dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-home text-xl"></i><span class="text-xs block">Home</span></a>
-            <a href="modern_coverage.html" class="nav-item flex-1 text-center text-gray-600 dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-shield-halved text-xl"></i><span class="text-xs block">Coverage</span></a>
-            <a href="modern_assistant.html" class="nav-item flex-1 text-center text-gray-600 dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-robot text-xl"></i><span class="text-xs block">Assistant</span></a>
-            <a href="modern_claims.html" class="nav-item flex-1 text-center text-gray-600 dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-file-invoice text-xl"></i><span class="text-xs block">Claims</span></a>
-            <a href="modern_providers.html" class="nav-item flex-1 text-center text-gray-600 dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-hospital text-xl"></i><span class="text-xs block">Providers</span></a>
-            <a href="modern_enrollment.html" class="nav-item flex-1 text-center text-gray-600 dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-user-plus text-xl"></i><span class="text-xs block">Enrollment</span></a>
+        <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-200 dark:border-gray-700 flex justify-around p-2">
+            <a href="modern_home.html" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-home text-xl"></i><span class="text-xs block">Home</span></a>
+            <a href="modern_coverage.html" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-shield-halved text-xl"></i><span class="text-xs block">Coverage</span></a>
+            <a href="modern_support.html" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-headset text-xl"></i><span class="text-xs block">Support</span></a>
+            <a href="modern_claims.html" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-file-invoice text-xl"></i><span class="text-xs block">Claims</span></a>
+            <a href="modern_providers.html" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-hospital text-xl"></i><span class="text-xs block">Providers</span></a>
+            <a href="modern_enrollment.html" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition"><i class="fas fa-user-plus text-xl"></i><span class="text-xs block">Enrollment</span></a>
         </nav>
     </div>
 
