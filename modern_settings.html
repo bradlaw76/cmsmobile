@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Settings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style id="theme-style">
+        :root { --primary-color: #4f46e5; }
+        body { font-family: 'Inter', sans-serif; }
+        .bg-primary { background-color: var(--primary-color); }
+        .text-primary { color: var(--primary-color); }
+        .dark .dark\:bg-gray-800 { background-color: #1f2937; }
+        .dark .dark\:bg-gray-900 { background-color: #111827; }
+        .dark .dark\:text-gray-200 { color: #e5e7eb; }
+        .dark .dark\:text-gray-300 { color: #d1d5db; }
+        .dark .dark\:text-gray-400 { color: #9ca3af; }
+        .dark .dark\:border-gray-700 { border-color: #374151; }
+        .toggle-checkbox:checked { right: 0; border-color: var(--primary-color); }
+        .toggle-checkbox:checked + .toggle-label { background-color: var(--primary-color); }
+    </style>
+     <!-- === CONFIGURATION SECTION === -->
+    <script>
+        const defaultConfig = { participantName: "Jonathan Ive" };
+    </script>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+    <div class="max-w-md mx-auto bg-white dark:bg-gray-800 min-h-screen shadow-2xl">
+        <!-- Header -->
+        <header class="bg-white dark:bg-gray-800 p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between sticky top-0 z-10">
+            <img src="CMS logo.png" alt="CMS Logo" class="h-8" onerror="this.style.display='none'">
+            <div class="flex items-center gap-4">
+                <a href="modern_messages.html" class="text-gray-500 hover:text-primary dark:text-gray-400"><i class="fas fa-inbox fa-lg"></i></a>
+                <a href="modern_settings.html" class="text-primary"><i class="fas fa-cog fa-lg"></i></a>
+                <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-md font-semibold" id="profileAvatar"></div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="p-4 pb-24 space-y-6">
+            <div class="flex items-center gap-4">
+                <a href="modern_home.html" class="text-gray-500 hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a>
+                <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">App Settings</h1>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Profile</h2>
+                <div>
+                    <label for="participantName" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Participant Name</label>
+                    <input type="text" id="participantName" name="participantName" class="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-gray-800 dark:text-gray-200 focus:border-primary focus:ring-0">
+                </div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-5 rounded-xl border border-gray-200 dark:border-gray-700">
+                <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 mb-4">Theme Customization</h2>
+                <div class="space-y-6">
+                    <div><label for="primaryColor" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Primary Color</label><input type="color" id="primaryColor" name="primaryColor" class="w-full h-10 p-1 border border-gray-300 dark:border-gray-700 rounded-lg"></div>
+                    <div><label for="fontSelection" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">App Font</label><select id="fontSelection" name="fontSelection" class="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200"><option value="'Inter', sans-serif">Inter (Default)</option><option value="'Roboto', sans-serif">Roboto</option><option value="'Lato', sans-serif">Lato</option></select></div>
+                    <div><label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Dark Mode</label><div class="relative inline-block w-14 mr-2 align-middle select-none"><input type="checkbox" name="darkMode" id="darkMode" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/><label for="darkMode" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label></div></div>
+                </div>
+            </div>
+            <button id="saveSettings" class="w-full bg-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-primary-dark transition">Save Settings & Apply</button>
+            <div id="confirmationMessage" class="text-center text-green-600 font-semibold mt-4 hidden">Settings saved! Reloading app...</div>
+        </main>
+    </div>
+
+    <script>
+        function applyTheme() {
+            const settings = JSON.parse(localStorage.getItem('appSettings'));
+            if (settings) {
+                if (settings.darkMode) document.documentElement.classList.add('dark');
+                document.body.style.fontFamily = settings.fontFamily || "'Inter', sans-serif";
+                document.documentElement.style.setProperty('--primary-color', settings.primaryColor || '#4f46e5');
+            }
+        }
+        applyTheme();
+
+        const pColor=document.getElementById("primaryColor"),fSelect=document.getElementById("fontSelection"),dMode=document.getElementById("darkMode"),pName=document.getElementById("participantName"),saveBtn=document.getElementById("saveSettings"),confMsg=document.getElementById("confirmationMessage");
+        function loadSettings(){const e=JSON.parse(localStorage.getItem("appSettings"));e?(pColor.value=e.primaryColor||"#4f46e5",fSelect.value=e.fontFamily||"'Inter', sans-serif",dMode.checked=e.darkMode||!1,pName.value=e.participantName||defaultConfig.participantName):pName.value=defaultConfig.participantName}
+        saveBtn.addEventListener("click",()=>{const e={primaryColor:pColor.value,fontFamily:fSelect.value,darkMode:dMode.checked,participantName:pName.value};localStorage.setItem("appSettings",JSON.stringify(e)),confMsg.classList.remove("hidden"),setTimeout(()=>{window.location.href="modern_home.html"},1500)}),loadSettings();
+        const initials=pName.value.split(" ").map(e=>e[0]).join("");document.getElementById("profileAvatar").textContent=initials;
+        document.querySelector(".bg-primary").style.backgroundColor=getComputedStyle(document.documentElement).getPropertyValue("--primary-color");
+    </script>
+</body>
+</html>
