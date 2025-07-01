@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CMS Mobile App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style id="theme-style">
+        :root {
+            --primary-color: #4f46e5;
+            --primary-gradient-start: #4f46e5;
+            --primary-gradient-end: #7c3aed;
+        }
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .bg-primary-gradient { background-image: linear-gradient(to bottom right, var(--primary-gradient-start), var(--primary-gradient-end)); }
+        .bg-primary { background-color: var(--primary-color); }
+        .text-primary { color: var(--primary-color); }
+        .border-primary { border-color: var(--primary-color); }
+        .nav-item.active {
+            color: var(--primary-color);
+            background-color: color-mix(in srgb, var(--primary-color) 15%, transparent);
+        }
+        .tab-btn.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        .text-security-disc {
+            -webkit-text-security: disc;
+            -moz-text-security: disc;
+            text-security: disc;
+        }
+        .btn-primary { background-color: #0053A0; }
+        .btn-primary:hover { background-color: #003A70; }
+        /* Dark mode styles */
+        .dark .dark\:bg-gray-900 { background-color: #111827; }
+        .dark .dark\:bg-gray-800-main { background-color: #1f2937; }
+        .dark .dark\:text-gray-200 { color: #e5e7eb; }
+        .dark .dark\:text-gray-300 { color: #d1d5db; }
+        .dark .dark\:text-gray-400 { color: #9ca3af; }
+        .dark .dark\:border-gray-700 { border-color: #374151; }
+        .dark .dark\:border-gray-600 { border-color: #4b5563; }
+        .dark .dark\:bg-primary-light { background-color: color-mix(in srgb, var(--primary-color) 25%, #1f2937); }
+        .dark .dark\:focus\:bg-gray-900:focus { background-color: #111827; }
+        .status-approved { background-color: #dcfce7; color: #16a34a; }
+        .status-pending { background-color: #fef9c3; color: #ca8a04; }
+        .status-denied { background-color: #fee2e2; color: #dc2626; }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900">
+
+    <!-- App Container -->
+    <div id="app-container" class="max-w-md mx-auto h-full">
+
+        <!-- Login Page -->
+        <div id="page-login" class="page flex items-center justify-center min-h-screen bg-gray-100">
+            <div class="bg-white shadow-2xl rounded-2xl overflow-hidden max-w-md w-full m-4">
+                <div><img src="loginphoto.png" alt="Healthcare professional" class="object-cover h-48 w-full" onerror="this.src='https://placehold.co/600x300/d1e0f0/334155?text=Healthcare+Image'; this.onerror=null;"></div>
+                <div class="p-8">
+                    <div class="mb-6 text-center"><img src="CMS logo.png" alt="CMS.gov Logo" class="h-12 mx-auto" onerror="this.src='https://placehold.co/200x50/ffffff/003a78?text=CMS.gov+Logo'; this.onerror=null;"></div>
+                    <h1 class="text-3xl font-bold text-gray-800 mb-2 text-center">Welcome Back</h1>
+                    <p class="text-gray-500 mb-8 text-center">Please sign in to your account.</p>
+                    <form onsubmit="event.preventDefault(); navigateTo('page-home');">
+                        <div class="mb-4">
+                            <label for="username" class="block text-gray-700 text-sm font-bold mb-2">Username</label>
+                            <input type="text" id="username" value="J.Ive" class="text-security-disc shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        </div>
+                        <div class="mb-6">
+                            <label for="password" class="block text-gray-700 text-sm font-bold mb-2">Password</label>
+                            <div class="relative">
+                                <input type="password" id="password" value="••••••••" class="shadow-sm appearance-none border rounded-lg w-full py-3 px-4 text-gray-700 leading-tight focus:outline-none focus:ring-2 focus:ring-blue-500">
+                                <div class="absolute inset-y-0 right-0 pr-3 flex items-center"><i class="fas fa-fingerprint text-gray-400 text-2xl cursor-pointer hover:text-blue-500"></i></div>
+                            </div>
+                        </div>
+                        <div class="mb-4"><button type="submit" class="w-full btn-primary text-white font-bold py-3 px-4 rounded-lg focus:outline-none focus:shadow-outline transition duration-300">Login</button></div>
+                        <div class="text-center"><a href="#" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">Forgot Password?</a></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main App Shell (hidden by default) -->
+        <div id="page-main-app" class="page hidden h-full bg-white dark:bg-gray-800-main shadow-2xl flex flex-col">
+            <header class="bg-white p-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between z-10">
+                <div class="flex items-center gap-4">
+                    <img src="CMS logo.png" alt="CMS Logo" class="h-8" onerror="this.style.display='none'">
+                    <a href="#" onclick="navigateTo('page-messages')" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-inbox fa-lg"></i></a>
+                    <a href="#" onclick="navigateTo('page-settings')" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-cog fa-lg"></i></a>
+                </div>
+                <div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white text-md font-semibold" id="profileAvatar"></div>
+            </header>
+
+            <main id="app-content" class="flex-grow overflow-y-auto"></main>
+
+            <nav class="bg-white border-t border-gray-200 dark:border-gray-700 flex justify-around p-2">
+                <a href="#" onclick="navigateTo('page-home')" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition" data-page="page-home"><i class="fas fa-home text-xl"></i><span class="text-xs block">Home</span></a>
+                <a href="#" onclick="navigateTo('page-coverage')" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition" data-page="page-coverage"><i class="fas fa-shield-halved text-xl"></i><span class="text-xs block">Coverage</span></a>
+                <a href="#" onclick="navigateTo('page-support')" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition" data-page="page-support"><i class="fas fa-headset text-xl"></i><span class="text-xs block">Support</span></a>
+                <a href="#" onclick="navigateTo('page-claims')" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition" data-page="page-claims"><i class="fas fa-file-invoice text-xl"></i><span class="text-xs block">Claims</span></a>
+                <a href="#" onclick="navigateTo('page-providers')" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition" data-page="page-providers"><i class="fas fa-hospital text-xl"></i><span class="text-xs block">Providers</span></a>
+                <a href="#" onclick="navigateTo('page-enrollment')" class="nav-item flex-1 text-center text-black dark:text-gray-400 hover:text-primary p-2 rounded-lg transition" data-page="page-enrollment"><i class="fas fa-user-plus text-xl"></i><span class="text-xs block">Enrollment</span></a>
+            </nav>
+        </div>
+
+    </div>
+
+    <!-- Page Templates -->
+    <template id="template-home">
+        <div class="p-4">
+            <div class="mb-6"><p class="text-black dark:text-gray-400">Welcome back,</p><h1 id="participantName" class="text-2xl font-bold text-black dark:text-gray-200"></h1></div>
+            <div class="bg-primary-gradient text-white rounded-2xl p-6 mb-6 shadow-lg"><div class="flex justify-between items-start"><h2 class="text-lg font-semibold" id="planName"></h2><i class="fab fa-medicare text-3xl opacity-70"></i></div><div class="mt-8"><p class="text-sm opacity-80">Member ID</p><p id="memberId" class="text-lg font-mono tracking-wider"></p></div></div>
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <a href="#" onclick="navigateTo('page-payments')" class="bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 p-4 rounded-xl text-center transition"><i class="fas fa-credit-card text-2xl text-primary mb-2"></i><p class="font-medium text-black dark:text-gray-300">Pay Premium</p></a>
+                <a href="#" onclick="navigateTo('page-providers')" class="bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 p-4 rounded-xl text-center transition"><i class="fas fa-user-doctor text-2xl text-primary mb-2"></i><p class="font-medium text-black dark:text-gray-300">Find a Doctor</p></a>
+                <a href="#" onclick="navigateTo('page-card')" class="bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 p-4 rounded-xl text-center transition"><i class="fas fa-id-card text-2xl text-primary mb-2"></i><p class="font-medium text-black dark:text-gray-300">View ID Card</p></a>
+                <a href="#" class="bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 p-4 rounded-xl text-center transition"><i class="fas fa-phone text-2xl text-primary mb-2"></i><p class="font-medium text-black dark:text-gray-300">Contact Us</p></a>
+            </div>
+            <div><h3 class="text-lg font-semibold text-black dark:text-gray-200 mb-3">Recent Activity</h3><div class="space-y-3"><div class="bg-white dark:bg-gray-800-main p-4 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center space-x-4"><div class="bg-green-100 text-green-600 p-3 rounded-full"><i class="fas fa-check"></i></div><div><p class="font-semibold text-black dark:text-gray-300">Claim Approved</p><p class="text-sm text-black dark:text-gray-400">Wellness Visit - June 25, 2025</p></div><a href="#" onclick="navigateTo('page-claims')" class="ml-auto text-primary font-semibold text-sm">View</a></div><div class="bg-white dark:bg-gray-800-main p-4 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center space-x-4"><div class="bg-blue-100 text-blue-600 p-3 rounded-full"><i class="fas fa-file-invoice-dollar"></i></div><div><p class="font-semibold text-black dark:text-gray-300">Payment Processed</p><p class="text-sm text-black dark:text-gray-400">July Premium - June 28, 2025</p></div><a href="#" onclick="navigateTo('page-payments')" class="ml-auto text-primary font-semibold text-sm">Details</a></div></div></div>
+        </div>
+    </template>
+
+    <template id="template-coverage">
+        <div class="p-4 space-y-6">
+            <div class="flex items-center gap-4"><a href="#" onclick="navigateTo('page-home')" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a><h1 class="text-2xl font-bold text-black dark:text-gray-200">Coverage & Benefits</h1></div>
+            <div class="bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700"><div class="flex items-center gap-3 mb-4"><i class="fas fa-check-circle text-2xl text-green-500"></i><h2 class="text-lg font-semibold text-black dark:text-gray-200">Covered Services</h2></div><ul id="coveredList" class="space-y-3"></ul></div>
+            <div class="bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700"><div class="flex items-center gap-3 mb-4"><i class="fas fa-times-circle text-2xl text-red-500"></i><h2 class="text-lg font-semibold text-black dark:text-gray-200">Not Covered</h2></div><ul id="notCoveredList" class="space-y-3"></ul></div>
+            <div class="bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700"><h2 class="text-lg font-semibold text-black dark:text-gray-200 mb-4">Plan Details</h2><div class="space-y-4"><div class="flex items-start gap-4"><i class="fas fa-pills text-xl text-primary mt-1"></i><div><h3 class="font-semibold text-black dark:text-gray-300">Prescription Drug Plan</h3><p id="prescriptionPlan" class="text-black dark:text-gray-400"></p></div></div><div class="flex items-start gap-4"><i class="fas fa-heart-pulse text-xl text-primary mt-1"></i><div><h3 class="font-semibold text-black dark:text-gray-300">Preventive Services</h3><p id="preventiveEligibility" class="text-black dark:text-gray-400"></p></div></div></div></div>
+        </div>
+    </template>
+
+    <template id="template-support">
+        <div class="flex-grow flex flex-col overflow-hidden">
+            <div class="p-4"><div class="flex items-center gap-4"><a href="#" onclick="navigateTo('page-home')" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a><h1 class="text-2xl font-bold text-black dark:text-gray-200">Support Center</h1></div></div>
+            <div class="border-b border-gray-200 dark:border-gray-700 px-4"><nav class="flex -mb-px" aria-label="Tabs"><button class="tab-btn active w-1/2 py-4 px-1 text-center border-b-2 font-medium text-sm" data-tab="assistant">Virtual Assistant</button><button class="tab-btn w-1/2 py-4 px-1 text-center border-b-2 border-transparent font-medium text-sm text-gray-500 hover:text-gray-700 hover:border-gray-300" data-tab="cases">My Cases</button></nav></div>
+            <div class="flex-grow p-4 overflow-hidden"><div id="assistant" class="tab-content h-full"><iframe src="https://web.powerva.microsoft.com/environments/3516f962-1f69-e81b-8df1-5b52add15d0d/bots/crfa5_cmsSelfServiceAssistant/webchat?__version__=2" frameborder="0" style="width: 100%; height: 100%; border-radius: 8px;"></iframe></div><div id="cases" class="tab-content hidden h-full overflow-y-auto space-y-4"><div class="bg-white dark:bg-gray-800-main p-4 rounded-lg border border-gray-200 dark:border-gray-600"><div class="flex justify-between items-center mb-2"><p class="font-bold text-black dark:text-gray-200">Case #89231-A</p><span class="px-2 py-1 text-xs font-semibold text-green-800 bg-green-100 rounded-full">Closed</span></div><p class="text-sm text-black dark:text-gray-300">Inquiry about Part B premium.</p><p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Closed on: June 15, 2025</p></div><div class="bg-white dark:bg-gray-800-main p-4 rounded-lg border border-gray-200 dark:border-gray-600"><div class="flex justify-between items-center mb-2"><p class="font-bold text-black dark:text-gray-200">Case #89105-C</p><span class="px-2 py-1 text-xs font-semibold text-yellow-800 bg-yellow-100 rounded-full">Open</span></div><p class="text-sm text-black dark:text-gray-300">Question about finding a specialist.</p><p class="text-xs text-gray-500 dark:text-gray-400 mt-2">Opened on: June 28, 2025</p></div></div></div>
+        </div>
+    </template>
+
+    <template id="template-claims">
+        <div class="p-4">
+            <div class="flex items-center gap-4 mb-6"><a href="#" onclick="navigateTo('page-home')" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a><h1 class="text-2xl font-bold text-black dark:text-gray-200">Claims History</h1></div>
+            <div id="claimsList" class="space-y-4"></div>
+        </div>
+    </template>
+
+    <template id="template-providers">
+        <div class="flex flex-col h-full">
+            <div class="p-4 bg-white dark:bg-gray-800-main border-b border-gray-200 dark:border-gray-700">
+                <div class="flex items-center gap-4 mb-4"><a href="#" onclick="navigateTo('page-home')" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a><h1 class="text-2xl font-bold text-black dark:text-gray-200">Find a Provider</h1></div>
+                <div class="relative"><input type="text" placeholder="Search by name, specialty, or location" class="w-full pl-10 pr-4 py-3 bg-gray-100 dark:bg-gray-700 text-black dark:text-gray-200 rounded-lg border-2 border-transparent focus:border-primary focus:ring-0 focus:bg-white dark:focus:bg-gray-900 transition"><i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i></div>
+            </div>
+            <div id="providerList" class="p-4 space-y-4 flex-grow overflow-y-auto"></div>
+        </div>
+    </template>
+    
+    <template id="template-enrollment">
+        <div class="p-4 space-y-6">
+            <div class="flex items-center gap-4"><a href="#" onclick="navigateTo('page-home')" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a><h1 class="text-2xl font-bold text-black dark:text-gray-200">Enrollment</h1></div>
+            <div class="bg-blue-50 dark:bg-primary-light border-l-4 border-primary p-5 rounded-r-lg"><h2 class="text-sm font-semibold text-primary mb-1">Your Current Plan</h2><p id="currentPlan" class="text-lg font-bold text-black dark:text-white"></p></div>
+            <div class="bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700"><h2 class="text-lg font-semibold text-black dark:text-gray-200 mb-4">Enrollment Options</h2><div class="space-y-3"><button class="w-full bg-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-primary-dark transition flex items-center justify-center gap-2"><i class="fas fa-star"></i><span>Switch to Medicare Advantage</span></button><button class="w-full bg-white dark:bg-gray-800-main text-primary font-semibold py-3 px-4 rounded-lg border-2 border-primary hover:bg-primary-light transition flex items-center justify-center gap-2"><i class="fas fa-pills"></i><span>Add Prescription Drug Plan (Part D)</span></button></div></div>
+            <div class="bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700"><h2 class="text-lg font-semibold text-black dark:text-gray-200 mb-4">Important Information</h2><div class="space-y-4"><div class="flex items-start gap-4"><i class="fas fa-calendar-alt text-xl text-yellow-500 mt-1"></i><div><h3 class="font-semibold text-black dark:text-gray-300" id="upcomingEvent"></h3><p class="text-black dark:text-gray-400">Ends on <strong id="enrollmentDeadline" class="text-black dark:text-gray-200"></strong></p></div></div><div id="specialNoticeContainer" class="flex items-start gap-4 p-4 bg-yellow-50 dark:bg-gray-700 border border-yellow-200 dark:border-yellow-900 rounded-lg"><i class="fas fa-bell text-xl text-yellow-600 mt-1"></i><div><h3 class="font-semibold text-yellow-800 dark:text-yellow-300">Special Notice</h3><p id="specialNotice" class="text-yellow-700 dark:text-yellow-400"></p></div></div></div></div>
+        </div>
+    </template>
+
+    <template id="template-payments">
+        <div class="p-4 space-y-6">
+            <div class="flex items-center gap-4"><a href="#" onclick="navigateTo('page-home')" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a><h1 class="text-2xl font-bold text-black dark:text-gray-200">Payments</h1></div>
+            <div class="bg-primary-gradient text-white rounded-2xl p-6 text-center shadow-lg"><p class="text-sm opacity-80">Total Monthly Premium</p><p class="text-4xl font-bold my-2" id="totalPremium"></p><p class="text-sm opacity-80">Next payment on <span id="nextPaymentDate"></span></p></div>
+            <div class="bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700"><h2 class="text-lg font-semibold text-black dark:text-gray-200 mb-4">Premium Breakdown</h2><div class="space-y-3"><div class="flex justify-between items-center"><p class="text-black dark:text-gray-400">Medicare Part A</p><p class="font-semibold text-black dark:text-gray-200" id="partA"></p></div><hr class="dark:border-gray-700"><div class="flex justify-between items-center"><p class="text-black dark:text-gray-400">Medicare Part B</p><p class="font-semibold text-black dark:text-gray-200" id="partB"></p></div><hr class="dark:border-gray-700"><div class="flex justify-between items-center"><p class="text-black dark:text-gray-400">Medicare Part D</p><p class="font-semibold text-black dark:text-gray-200" id="partD"></p></div></div></div>
+            <div class="bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700"><h2 class="text-lg font-semibold text-black dark:text-gray-200 mb-4">Payment Method</h2><div class="flex items-center gap-4 mb-4"><div class="w-12 h-12 bg-indigo-100 dark:bg-gray-700 rounded-lg flex items-center justify-center"><i class="fas fa-university text-2xl text-primary"></i></div><div><p class="font-semibold text-black dark:text-gray-300">Auto Deduction</p><p id="paymentMethod" class="text-sm text-black dark:text-gray-400"></p></div></div><button class="w-full bg-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-primary-dark transition">Update Payment Method</button></div>
+        </div>
+    </template>
+
+    <template id="template-messages">
+        <div class="p-4">
+            <div class="flex items-center gap-4 mb-6"><a href="#" onclick="navigateTo('page-home')" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a><h1 class="text-2xl font-bold text-black dark:text-gray-200">Inbox</h1></div>
+            <div id="messageList" class="space-y-4"></div>
+        </div>
+    </template>
+    
+    <template id="template-card">
+        <div class="p-4">
+            <div class="flex items-center gap-4 mb-6"><a href="#" onclick="navigateTo('page-home')" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a><h1 class="text-2xl font-bold text-black dark:text-gray-200">Your ID Card</h1></div>
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden relative font-sans max-w-sm mx-auto border-2 border-gray-200">
+                <div class="bg-[#003a78] text-white p-3 flex items-center justify-between"><img src="https://www.cms.gov/themes/custom/cms_gov/images/logo_white.png" alt="HHS Logo" class="h-8"><h2 class="text-xl font-bold tracking-wider">MEDICARE HEALTH INSURANCE</h2></div>
+                <div class="p-4 relative"><div class="absolute inset-0 flex items-center justify-center"><p class="text-8xl font-bold text-gray-200 opacity-50 transform -rotate-12 select-none">SAMPLE</p></div><div class="relative z-10"><div class="mb-4"><p class="text-xs text-gray-600">Name/Nombre</p><p id="cardName" class="font-bold text-lg tracking-wider"></p></div><div class="mb-4"><p class="text-xs text-gray-600">Medicare Number/Número de Medicare</p><p class="font-mono text-lg tracking-widest">1EG4-TE5-MK72</p></div><div class="flex justify-between"><div><p class="text-xs text-gray-600">Entitled to/Con derecho a</p><p class="font-bold">HOSPITAL (PART A)</p><p class="font-bold">MEDICAL (PART B)</p></div><div><p class="text-xs text-gray-600">Coverage starts/Cobertura empieza</p><p class="font-bold">03-01-2016</p><p class="font-bold">03-01-2016</p></div></div></div></div>
+                <div class="bg-[#c00000] h-4"></div>
+            </div>
+        </div>
+    </template>
+
+    <template id="template-settings">
+        <div class="p-4 space-y-6">
+            <div class="flex items-center gap-4"><a href="#" onclick="navigateTo('page-home')" class="text-black hover:text-primary dark:text-gray-400"><i class="fas fa-arrow-left fa-lg"></i></a><h1 class="text-2xl font-bold text-black dark:text-gray-200">App Settings</h1></div>
+            <div class="bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700"><h2 class="text-lg font-semibold text-black dark:text-gray-200 mb-4">Profile</h2><div><label for="settings-participantName" class="block text-sm font-medium text-black dark:text-gray-300 mb-2">Participant Name</label><input type="text" id="settings-participantName" class="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-900 text-black dark:text-gray-200 focus:border-primary focus:ring-0"></div></div>
+            <div class="bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700"><h2 class="text-lg font-semibold text-black dark:text-gray-200 mb-4">Theme Customization</h2><div class="space-y-6"><div><label for="settings-primaryColor" class="block text-sm font-medium text-black dark:text-gray-300 mb-2">Primary Color</label><input type="color" id="settings-primaryColor" class="w-full h-10 p-1 border border-gray-300 dark:border-gray-700 rounded-lg"></div><div><label for="settings-fontSelection" class="block text-sm font-medium text-black dark:text-gray-300 mb-2">App Font</label><select id="settings-fontSelection" class="w-full p-2 border border-gray-300 dark:border-gray-700 rounded-lg bg-white dark:bg-gray-800 text-black dark:text-gray-200"><option value="'Inter', sans-serif">Inter (Default)</option><option value="'Roboto', sans-serif">Roboto</option><option value="'Lato', sans-serif">Lato</option></select></div><div><label class="block text-sm font-medium text-black dark:text-gray-300 mb-2">Dark Mode</label><div class="relative inline-block w-14 mr-2 align-middle select-none"><input type="checkbox" id="settings-darkMode" class="toggle-checkbox absolute block w-6 h-6 rounded-full bg-white border-4 appearance-none cursor-pointer"/><label for="settings-darkMode" class="toggle-label block overflow-hidden h-6 rounded-full bg-gray-300 cursor-pointer"></label></div></div></div></div>
+            <button id="saveSettings" class="w-full bg-primary text-white font-semibold py-3 px-4 rounded-lg hover:bg-primary-dark transition">Save Settings</button>
+            <div id="confirmationMessage" class="text-center text-green-600 font-semibold mt-4 hidden">Settings saved successfully!</div>
+        </div>
+    </template>
+
+    <script>
+        // --- CONFIGURATION ---
+        const config = {
+            participantName: "Jonathan Ive",
+            memberId: "M789-456-1230",
+            planName: "Original Medicare (Part A & B)",
+            coveredServices: ["Annual Wellness Visit", "Diabetes Screening", "Flu Shot", "Cancer Screening"],
+            notCoveredServices: ["Massage Therapy", "Cosmetic Surgery", "Acupuncture"],
+            prescriptionPlan: "SilverRx Plus (Part D)",
+            eligibleForPreventive: true,
+            claims: [
+                { id: "C2025-789", provider: "Dr. Emily Chen", date: "June 25, 2025", total: 150.00, status: "Approved" },
+                { id: "C2025-780", provider: "Green Valley Hospital", date: "June 15, 2025", total: 1250.00, status: "Pending" },
+                { id: "C2025-775", provider: "Quest Diagnostics", date: "June 12, 2025", total: 320.50, status: "Approved" },
+                { id: "C2025-761", provider: "Vision World", date: "May 28, 2025", total: 450.00, status: "Denied" },
+            ],
+            providers: [
+                { name: "Dr. Emily Chen", specialty: "Primary Care", location: "Bethesda, MD", rating: 4.7, type: "doctor" },
+                { name: "Green Valley Hospital", specialty: "Hospital", location: "Rockville, MD", rating: 4.3, type: "hospital" },
+                { name: "Capitol Pharmacy", specialty: "Pharmacy", location: "Silver Spring, MD", rating: 4.5, type: "pharmacy" }
+            ],
+            currentPlan: "Original Medicare (Part A & B)",
+            enrollmentDeadline: "December 7, 2025",
+            upcomingEvent: "Open Enrollment Period",
+            specialNotice: "You're eligible for a Special Enrollment Period due to recent relocation.",
+            partA: "0.00",
+            partB: "174.70",
+            partD: "34.60",
+            paymentMethod: "Bank auto-deduction (Wells Fargo **** 1234)",
+            nextPaymentDate: "July 1, 2025",
+            messages: [
+                { date: "June 30, 2025", title: "Welcome to the CMS Benefits Program!", description: "We're glad to have you with us. Your new plan provides comprehensive coverage for your health needs. You can explore your coverage details, find providers, and manage your payments right here in the app. If you have any questions, don't hesitate to reach out." },
+                { date: "June 28, 2025", title: "Your Digital ID Card is Ready", description: "Your new digital membership ID card is now available. You can access it from the home screen at any time. Present this card to your healthcare providers at your next visit." },
+                { date: "June 25, 2025", title: "Action Required: Complete Your Health Assessment", description: "To help us personalize your care, please complete your annual health assessment. It only takes a few minutes and provides valuable information to your healthcare team. Click here to begin." }
+            ]
+        };
+
+        // --- APP LOGIC ---
+        const appContent = document.getElementById('app-content');
+        const pages = document.querySelectorAll('.page');
+        const navItems = document.querySelectorAll('.nav-item');
+
+        function applySettings() {
+            const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
+            const root = document.documentElement;
+            if (settings.darkMode) { root.classList.add('dark'); } else { root.classList.remove('dark'); }
+            document.body.style.fontFamily = settings.fontFamily || "'Inter', sans-serif";
+            const primaryColor = settings.primaryColor || '#4f46e5';
+            const lightenDarkenColor = (c,a)=>{let u=!1;if(c[0]=="#"){c=c.slice(1);u=!0}let n=parseInt(c,16),r=(n>>16)+a;r>255?r=255:r<0&&(r=0);let t=(n>>8&255)+a;t>255?t=255:t<0&&(t=0);let e=(255&n)+a;e>255?e=255:e<0&&(e=0);return(u?"#":"")+(e|t<<8|r<<16).toString(16).padStart(6,"0")};
+            root.style.setProperty('--primary-color', primaryColor);
+            root.style.setProperty('--primary-gradient-start', primaryColor);
+            root.style.setProperty('--primary-gradient-end', lightenDarkenColor(primaryColor, -40));
+            const currentParticipantName = settings.participantName || config.participantName;
+            const initials = currentParticipantName.split(' ').map(n => n[0]).join('');
+            document.getElementById('profileAvatar').textContent = initials;
+        }
+
+        function renderPage(pageId) {
+            const template = document.getElementById(`template-${pageId.replace('page-','')}`);
+            if (!template) return;
+            appContent.innerHTML = template.innerHTML;
+
+            // Page-specific render logic
+            const settings = JSON.parse(localStorage.getItem('appSettings')) || {};
+            const participantName = settings.participantName || config.participantName;
+
+            if (pageId === 'page-home') {
+                document.getElementById('participantName').textContent = participantName;
+                document.getElementById('planName').textContent = config.planName;
+                document.getElementById('memberId').textContent = config.memberId;
+            } else if (pageId === 'page-coverage') {
+                document.getElementById("prescriptionPlan").innerText=config.prescriptionPlan;
+                document.getElementById("preventiveEligibility").innerText=config.eligibleForPreventive?"You are eligible for all Medicare-covered preventive screenings.":"Check your plan details for eligibility.";
+                const coveredList=document.getElementById("coveredList");config.coveredServices.forEach(e=>{const t=document.createElement("li");t.className="flex items-center gap-3 text-black dark:text-gray-300",t.innerHTML=`<i class="fa-solid fa-circle-check text-green-500"></i><span>${e}</span>`,coveredList.appendChild(t)});
+                const notCoveredList=document.getElementById("notCoveredList");config.notCoveredServices.forEach(e=>{const t=document.createElement("li");t.className="flex items-center gap-3 text-black dark:text-gray-400",t.innerHTML=`<i class="fa-solid fa-circle-xmark text-red-500"></i><span>${e}</span>`,notCoveredList.appendChild(t)});
+            } else if (pageId === 'page-claims') {
+                const claimsListContainer = appContent.querySelector('#claimsList');
+                config.claims.forEach(claim => {
+                    const claimCard = document.createElement('div');
+                    claimCard.className = 'bg-white dark:bg-gray-800-main p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm';
+                    let sClass, sIcon;
+                    switch(claim.status.toLowerCase()){case'approved':sClass='status-approved';sIcon='fa-check-circle';break;case'pending':sClass='status-pending';sIcon='fa-hourglass-half';break;case'denied':sClass='status-denied';sIcon='fa-times-circle';break;}
+                    claimCard.innerHTML = `<div class="flex justify-between items-start"><div><p class="font-bold text-black dark:text-gray-200">${claim.provider}</p><p class="text-sm text-black dark:text-gray-400">Claim ID: ${claim.id}</p></div><div class="text-right"><p class="font-bold text-lg text-black dark:text-gray-200">$${claim.total.toFixed(2)}</p><p class="text-sm text-black dark:text-gray-400">${claim.date}</p></div></div><div class="mt-4 pt-4 border-t border-gray-100 dark:border-gray-700 flex justify-between items-center"><span class="text-sm font-semibold px-3 py-1 rounded-full ${sClass}"><i class="fas ${sIcon} mr-1"></i>${claim.status}</span><a href="#" class="text-primary font-semibold text-sm hover:underline">View Details</a></div>`;
+                    claimsListContainer.appendChild(claimCard);
+                });
+            } else if (pageId === 'page-providers') {
+                const providerListContainer=appContent.querySelector("#providerList");
+                config.providers.forEach(e=>{const t=document.createElement("div");t.className="bg-white dark:bg-gray-800-main p-4 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm flex items-center gap-4";let a="fa-user-doctor";"hospital"===e.type?a="fa-hospital":"pharmacy"===e.type&&(a="fa-pills"),t.innerHTML=`<div class="w-16 h-16 bg-indigo-100 dark:bg-gray-700 rounded-lg flex items-center justify-center"><i class="fas ${a} text-3xl text-primary"></i></div><div class="flex-1"><p class="font-bold text-black dark:text-gray-200">${e.name}</p><p class="text-sm text-primary font-semibold">${e.specialty}</p><p class="text-sm text-black dark:text-gray-400 flex items-center gap-1 mt-1"><i class="fas fa-map-marker-alt"></i>${e.location}</p></div><div class="text-center"><div class="flex items-center gap-1 text-yellow-400"><i class="fas fa-star"></i><span class="font-bold text-black dark:text-gray-300">${e.rating}</span></div><a href="#" class="text-sm font-semibold text-primary hover:underline mt-1 block">View</a></div>`,providerListContainer.appendChild(t)});
+            } else if (pageId === 'page-enrollment') {
+                document.getElementById("currentPlan").innerText=config.currentPlan;
+                document.getElementById("enrollmentDeadline").innerText=config.enrollmentDeadline;
+                document.getElementById("upcomingEvent").innerText=config.upcomingEvent;
+                const specialNoticeEl=document.getElementById("specialNotice"),specialNoticeContainer=document.getElementById("specialNoticeContainer");
+                config.specialNotice?(specialNoticeEl.innerText=config.specialNotice,specialNoticeContainer.style.display="flex"):(specialNoticeContainer.style.display="none");
+            } else if (pageId === 'page-payments') {
+                const partA=parseFloat(config.partA),partB=parseFloat(config.partB),partD=parseFloat(config.partD),total=partA+partB+partD;
+                document.getElementById("totalPremium").textContent=`$${total.toFixed(2)}`;
+                document.getElementById("partA").textContent=`$${partA.toFixed(2)}`;
+                document.getElementById("partB").textContent=`$${partB.toFixed(2)}`;
+                document.getElementById("partD").textContent=`$${partD.toFixed(2)}`;
+                document.getElementById("paymentMethod").textContent=config.paymentMethod;
+                document.getElementById("nextPaymentDate").textContent=config.nextPaymentDate;
+            } else if (pageId === 'page-messages') {
+                const messageListContainer = appContent.querySelector('#messageList');
+                config.messages.forEach(message => {
+                    const messageCard = document.createElement('div');
+                    messageCard.className = 'bg-white dark:bg-gray-800-main p-5 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm';
+                    messageCard.innerHTML = `<div class="flex justify-between items-center mb-2"><h2 class="font-bold text-lg text-black dark:text-gray-200">${message.title}</h2><span class="text-xs text-black dark:text-gray-400">${message.date}</span></div><p class="text-black dark:text-gray-300">${message.description}</p>`;
+                    messageListContainer.appendChild(messageCard);
+                });
+            } else if (pageId === 'page-card') {
+                document.getElementById('cardName').textContent = participantName.toUpperCase();
+            } else if (pageId === 'page-settings') {
+                const pColor=document.getElementById("settings-primaryColor"),fSelect=document.getElementById("settings-fontSelection"),dMode=document.getElementById("settings-darkMode"),pName=document.getElementById("settings-participantName"),saveBtn=document.getElementById("saveSettings"),confMsg=document.getElementById("confirmationMessage");
+                function loadSettings(){const e=JSON.parse(localStorage.getItem("appSettings"))||{};pColor.value=e.primaryColor||"#4f46e5",fSelect.value=e.fontFamily||"'Inter', sans-serif",dMode.checked=e.darkMode||!1,pName.value=e.participantName||config.participantName}
+                saveBtn.addEventListener("click",()=>{const e={primaryColor:pColor.value,fontFamily:fSelect.value,darkMode:dMode.checked,participantName:pName.value};localStorage.setItem("appSettings",JSON.stringify(e)),confMsg.classList.remove("hidden"),setTimeout(()=>{confMsg.classList.add("hidden");applySettings();},2000)}),loadSettings();
+            } else if (pageId === 'page-support') {
+                 const tabs = appContent.querySelectorAll('.tab-btn');
+                 const tabContents = appContent.querySelectorAll('.tab-content');
+                 tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        const target = tab.getAttribute('data-tab');
+                        tabs.forEach(t => { t.classList.remove('active', 'text-primary'); t.classList.add('text-gray-500', 'hover:text-gray-700', 'border-transparent', 'hover:border-gray-300');});
+                        tab.classList.add('active', 'text-primary'); tab.classList.remove('text-gray-500', 'border-transparent');
+                        tabContents.forEach(content => { content.id === target ? content.classList.remove('hidden') : content.classList.add('hidden'); });
+                    });
+                 });
+            }
+        }
+
+        function navigateTo(pageId) {
+            pages.forEach(page => {
+                if (page.id === 'page-login') {
+                    page.style.display = (pageId === 'page-login') ? 'flex' : 'none';
+                } else {
+                    page.style.display = (pageId !== 'page-login') ? 'flex' : 'none';
+                }
+            });
+
+            if (pageId !== 'page-login') {
+                renderPage(pageId);
+                navItems.forEach(item => {
+                    item.classList.toggle('active', item.dataset.page === pageId);
+                });
+            }
+        }
+
+        // Initial load
+        document.addEventListener('DOMContentLoaded', () => {
+            applySettings();
+            navigateTo('page-login'); // Start on the login page
+        });
+    </script>
+</body>
+</html>
